@@ -1,0 +1,11 @@
+# Ignore
+.idea/
+venv/
+.DS_Store
+
+# But not *.py
+!*.py
+
+# Or
+!.gitignore
+!README.md
