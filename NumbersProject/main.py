@@ -67,6 +67,10 @@ class Network:
 
         plt.plot(range(1, len(total_errors) + 1), total_errors, marker='x')
 
+        plt.title('errors per learning iteration')
+        plt.xlabel('learning iterations')
+        plt.ylabel('errors')
+
         plt.show()
 
     def show(self, X):
@@ -109,22 +113,29 @@ def main():
     Y = df.iloc[0:10, 35:45].values
 
     network = Network()
-    network.show(X)
 
     network.fit(X, Y)
     network.errors()
 
+    print('damage 0%:')
     network.predict(X)
     network.misclassified(Y)
+    network.show(X)
 
+    print('damage 5%:')
     network.predict(damage(X, 5))
     network.misclassified(Y)
+    network.show(damage(X, 5))
 
+    print('damage 15%:')
     network.predict(damage(X, 15))
     network.misclassified(Y)
+    network.show(damage(X, 15))
 
+    print('damage 40%:')
     network.predict(damage(X, 40))
     network.misclassified(Y)
+    network.show(damage(X, 40))
 
 
 if __name__ == '__main__':
