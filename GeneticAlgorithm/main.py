@@ -19,7 +19,8 @@ def fitness_result(population, chromosome_my):
     fitness_product = []
 
     for i in population:
-        fitness_product.append(fitness_function(chromosome_my, i))
+        num = fitness_function(chromosome_my, i)
+        fitness_product.append(pow(num, 4))
 
     return fitness_product
 
@@ -121,14 +122,14 @@ def main():
 
     print()
 
-    it = 1
+    population_num = 1
 
     new_population_loop = first_new_population
 
     # while collections.Counter(fitness_result(new_population_loop, chromosome_my)) != collections.Counter(
     #        [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]):
     while not (any(x == 1.0 for x in fitness_result(new_population_loop, chromosome_my))):
-        print("iteration: " + str(it + 1))
+        print("population: " + str(population_num + 1))
 
         fitness_list_loop = fitness_result(new_population_loop, chromosome_my)
 
@@ -145,9 +146,9 @@ def main():
         print(fitness_result(new_population_loop, chromosome_my))
 
         print()
-        it += 1
+        population_num += 1
 
-    print("iterations num: " + str(it))
+    print("population num: " + str(population_num))
 
 
 if __name__ == '__main__':
