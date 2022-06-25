@@ -5,6 +5,8 @@ venv/
 
 # But not *.py
 !*.py
+!*.ipynb
+!*.pdf
 
 # Or
 !.csv
