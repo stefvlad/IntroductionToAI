@@ -1,0 +1,50 @@
+drzwi(salon,kuchnia).
+drzwi(salon,oranzeria).
+drzwi(kuchnia,sypialnia).
+drzwi(korytarz,piwnica).
+drzwi(ubikacja,piwnica).
+drzwi(korytarz,ubikacja).
+drzwi(kuchnia,korytarz).
+drzwi(oranzeria,lazienka).
+
+klucz(salon,klucz_duzy).
+klucz(oranzeria,klucz_maly).
+klucz(korytarz,klucz_z_sercem).
+
+otwiera(ubikacja,klucz_maly).
+otwiera(oranzeria,klucz_z_sercem).
+
+in(X, Y) :- write('przechodze z '), write(X), write(' do '), writeln(Y).  
+out(X) :- write('wychodze z '), writeln(X).
+found_key(X) :- write('znalazlem klucz '), writeln(X). 
+
+walk(StartNode, EndNode, VisitedNodes) :-
+    ((drzwi(StartNode, NextNode); drzwi(NextNode, StartNode)) ; out(StartNode)),
+    not(member(NextNode, VisitedNodes)), atom(NextNode), 
+    in(StartNode, NextNode),
+    (        
+    	EndNode = NextNode
+    ;         
+     	walk(NextNode, EndNode, [StartNode|VisitedNodes])
+    ). 
+
+szukaj_wyjscia(StartNode, Gdzie_klucz, Wlasciwy_klucz, Gdzie_wyjscie) :-
+    ( 
+    	klucz(StartNode, Key),
+     	found_key(Key),
+     	(walk(StartNode, PossibleExit, []), otwiera(PossibleExit, Key)),
+        Gdzie_klucz = StartNode,
+     	Wlasciwy_klucz = Key,
+        Gdzie_wyjscie = PossibleExit,
+        writeln('znalazlem wyjscie')
+    );
+    ( 
+     	walk(StartNode, WhereIsKeyRoom, []),
+     	klucz(WhereIsKeyRoom, Key),
+     	found_key(Key),
+     	(walk(WhereIsKeyRoom, PossibleExit, []), otwiera(PossibleExit, Key)),
+        Gdzie_klucz = WhereIsKeyRoom,
+     	Wlasciwy_klucz = Key,
+     	Gdzie_wyjscie = PossibleExit,
+        writeln('znalazlem wyjscie')
+    ).
