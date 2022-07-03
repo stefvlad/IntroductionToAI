@@ -20,7 +20,7 @@ def fitness_result(population, chromosome_my):
 
     for i in population:
         num = fitness_function(chromosome_my, i)
-        fitness_product.append(pow(num, 4))
+        fitness_product.append(pow(num, 1))
 
     return fitness_product
 
@@ -78,9 +78,12 @@ def mutation(child):
     return child
 
 
-def generate_new_population(first_parent, second_parent):
+def generate_new_population(long_list_loop):
     new_population = []
     for i in range(6):
+        first_parent = random.choice(long_list_loop)
+        second_parent = random.choice(long_list_loop)
+
         child = crossover(first_parent, second_parent)
         new_population.append(mutation(child))
     return new_population
@@ -107,12 +110,8 @@ def main():
 
     long_list = generate_list_of_probabilities(probabilities_list, new_population)
 
-    first_parent_chromosome = random.choice(long_list)
-    second_parent_chromosome = random.choice(long_list)
-
     print("very first new population:")
-    first_new_population = generate_new_population(first_parent_chromosome,
-                                                   second_parent_chromosome)  # very first new population
+    first_new_population = generate_new_population(long_list)  # very first new population
 
     print(first_new_population)
 
@@ -137,10 +136,7 @@ def main():
 
         long_list_loop = generate_list_of_probabilities(probabilities_list_loop, new_population_loop)
 
-        first_parent_chromosome = random.choice(long_list_loop)
-        second_parent_chromosome = random.choice(long_list_loop)
-
-        new_population_loop = generate_new_population(first_parent_chromosome, second_parent_chromosome)
+        new_population_loop = generate_new_population(long_list_loop)
         print(new_population_loop)
 
         print(fitness_result(new_population_loop, chromosome_my))
